@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:login_clairity/screens/graphs/thingsSpeakGraphs.dart';
 import 'package:login_clairity/screens/map/location.dart';
 import 'package:login_clairity/services/auth.dart';
 import 'package:http/http.dart' as http;
@@ -68,7 +69,7 @@ class _HomeState extends State<Home> {
 
               SizedBox(height: 20.0),
               Text('PM 10 value : '+ pm10),
-              
+              // location button
               SizedBox(height: 20.0),
               RaisedButton(
                 color: Colors.blue[200],
@@ -78,6 +79,18 @@ class _HomeState extends State<Home> {
                   ),
                 onPressed: (){
                   Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => CurrentLocation()));
+                }
+                ),
+                  // graphs button
+                 SizedBox(height: 20.0),
+              RaisedButton(
+                color: Colors.blue[200],
+                  child: Text(
+                    'Graphs',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                onPressed: (){
+                  Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => Graphs()));
                 }
                 ),
           ]
