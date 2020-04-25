@@ -72,7 +72,7 @@ class _HomeState extends State<Home> {
               // location button
               SizedBox(height: 20.0),
               RaisedButton(
-                color: Colors.blue[200],
+                color: Colors.blue[400],
                   child: Text(
                     'Location',
                     style: TextStyle(color: Colors.white),
@@ -84,7 +84,7 @@ class _HomeState extends State<Home> {
                   // graphs button
                  SizedBox(height: 20.0),
               RaisedButton(
-                color: Colors.blue[200],
+                color: Colors.blue[400],
                   child: Text(
                     'Graphs',
                     style: TextStyle(color: Colors.white),
