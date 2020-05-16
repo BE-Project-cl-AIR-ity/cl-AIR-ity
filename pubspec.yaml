@@ -24,7 +24,6 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^0.1.2
   firebase_auth: ^0.16.0
-  cloud_firestore: ^0.13.5
   provider: ^4.0.5
   flutter_spinkit: "^4.1.2"
   geolocator: ^5.3.1
@@ -34,7 +33,8 @@ dependencies:
   simple_animations: 2.2.0
   page_transition: 1.1.5
   animated_splash: 1.0.0
-  syncfusion_flutter_gauges: 18.1.48
+  syncfusion_flutter_gauges: 
+  adobe_xd: 0.1.3
 
 
 dev_dependencies:

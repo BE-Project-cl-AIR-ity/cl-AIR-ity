@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>953347964642-toebvt3ndmq9uj9soa1n5okmppl7q3rp.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.953347964642-toebvt3ndmq9uj9soa1n5okmppl7q3rp</string>
+	<key>API_KEY</key>
+	<string>AIzaSyCLG4c79YDTZOOgcEMlXQowG3rP16VarMI</string>
+	<key>GCM_SENDER_ID</key>
+	<string>953347964642</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.example.loginClairity</string>
+	<key>PROJECT_ID</key>
+	<string>cl-air-ity-89f3e</string>
+	<key>STORAGE_BUCKET</key>
+	<string>cl-air-ity-89f3e.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:953347964642:ios:a5eea4442d6ae0763b28bb</string>
+	<key>DATABASE_URL</key>
+	<string>https://cl-air-ity-89f3e.firebaseio.com</string>
+</dict>
+</plist>

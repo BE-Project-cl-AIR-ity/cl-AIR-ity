@@ -1,5 +1,7 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:login_clairity/screens/authenticate/sign_in.dart';
 import 'package:login_clairity/screens/graphs/thingsSpeakGraphs.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
 import 'package:login_clairity/screens/map/location.dart';
@@ -7,11 +9,15 @@ import 'package:login_clairity/services/auth.dart';
 import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'dart:convert';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class Home extends StatefulWidget {
   @override
   _HomeState createState() => _HomeState();
 }
+
+
+
 
 String pm1 = '', pm2_5 = '', pm10 = '', name1 = '';
 double aqiDisplay = 0;
@@ -24,6 +30,8 @@ Map data;
 
 class _HomeState extends State<Home> {
   final AuthService _auth = AuthService();
+
+
 
   Map data;
   Future getData() async {
@@ -94,6 +102,9 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
+
+    
+    double width = MediaQuery.of(context).size.width;
     // Radial Meter
     var radialAxis = RadialAxis(
       minimum: 0,
@@ -123,10 +134,11 @@ class _HomeState extends State<Home> {
     );
     return Scaffold(
       backgroundColor: Colors.deepOrangeAccent[50],
+      //AppBAr
       appBar: AppBar(
         title: Text('Air Pollution values'),
-        backgroundColor: Color(0xffFF8427),
-        elevation: 0.0,
+        //backgroundColor: Color(0xffFF8427),
+        elevation: defaultTargetPlatform == TargetPlatform.android ? 5.0 : 0.0,
         actions: <Widget>[
           FlatButton.icon(
             icon: Icon(Icons.person),
@@ -137,13 +149,60 @@ class _HomeState extends State<Home> {
           )
         ],
       ),
+
+      drawer: new Drawer(
+        child: new ListView(children: <Widget>[
+          new UserAccountsDrawerHeader(
+            accountName: new Text("Swaraj Bhagade"),
+            accountEmail: new Text("swarajbhagade@gmail.com"),
+            currentAccountPicture: new CircleAvatar(
+                backgroundColor: Colors.cyan, child: new Text("S")),
+          ),
+          new ListTile(
+            title: new Text("AQI"),
+            trailing: new Icon(Icons.view_carousel),
+          ),
+          new ListTile(
+            title: new Text("Graphs"),
+            trailing: new Icon(Icons.grain),
+            onTap: () {
+              Navigator.of(context).pop();
+              Navigator.of(context).push(new MaterialPageRoute(builder: (BuildContext context)=>new Graphs()));
+            },
+          ),
+          new ListTile(
+            title: new Text("Insights"),
+            trailing: new Icon(Icons.insert_emoticon),
+          ),
+          new ListTile(
+            title: new Text("FAQ"),
+            trailing: new Icon(Icons.flag),
+          ),
+          new Divider(),
+          new ListTile(
+            title: new Text("Signout"),
+            trailing: new Icon(Icons.account_circle),
+            onTap: () async {
+              await _auth.signOut();
+             
+              //Navigator.of(context).pop();
+              Navigator.of(context).push(new MaterialPageRoute(builder: (BuildContext context)=>new SignIn()));
+           
+
+            },
+          ),
+        ]),
+      ),
+
       body: Container(
         //color: Color(0xffFF8427),
         padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 20.0),
         child: Column(children: <Widget>[
           SizedBox(height: 30),
-          Text(userLocation,
-          style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),),
+          Text(
+            userLocation,
+            style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
+          ),
           //Text('AQI Value'),
           SizedBox(height: 20),
           //Radial Meter
@@ -156,14 +215,20 @@ class _HomeState extends State<Home> {
           // PM values Display
           Row(
             children: <Widget>[
-              Text('PM 1 value : ' + pm1,
-               style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),),
-              SizedBox(width: 30),
-              Text('PM 2.5 value : ' + pm2_5,
-               style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),),
-              SizedBox(width: 30),
-              Text('PM 10 value : ' + pm10,
-               style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),),
+              Text(
+                'PM 1 value : ' + pm1,
+                style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),
+              ),
+              SizedBox(width: 10),
+              Text(
+                'PM 2.5 value : ' + pm2_5,
+                style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),
+              ),
+              SizedBox(width: 10),
+              Text(
+                'PM 10 value : ' + pm10,
+                style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),
+              ),
             ],
           ),
 
@@ -187,19 +252,19 @@ class _HomeState extends State<Home> {
               //     }),
 
               // graphs button
-              SizedBox(width: 30.0),
-              RaisedButton(
-                  color: Colors.blue[400],
-                  child: Text(
-                    'Graphs',
-                    style: TextStyle(color: Colors.white),
-                  ),
-                  onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (BuildContext context) => Graphs()));
-                  }),
+              // SizedBox(width: 30.0),
+              // RaisedButton(
+              //     color: Colors.blue[400],
+              //     child: Text(
+              //       'Graphs',
+              //       style: TextStyle(color: Colors.white),
+              //     ), 
+              //     onPressed: () {
+              //       Navigator.push(
+              //           context,
+              //           MaterialPageRoute(
+              //               builder: (BuildContext context) => Graphs()));
+              //     }),
             ],
           ),
         ]),
@@ -207,3 +272,4 @@ class _HomeState extends State<Home> {
     );
   }
 }
+
