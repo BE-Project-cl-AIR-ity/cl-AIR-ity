@@ -1,11 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:login_clairity/appDrawer.dart';
-import 'package:login_clairity/models/user.dart';
-import 'package:login_clairity/screens/graphs/thingsSpeakGraphs.dart';
-import 'package:login_clairity/screens/home/home.dart';
-import 'package:login_clairity/screens/wrapper.dart';
-import 'package:login_clairity/services/auth.dart';
-import 'package:provider/provider.dart';
+import 'package:login_clairity/screens/authenticate/auth.dart';
+import 'package:login_clairity/screens/authenticate/wrapper.dart';
 import 'package:syncfusion_flutter_core/core.dart';
 
 void main() {
@@ -31,17 +26,20 @@ MaterialColor colorCustom = MaterialColor(0xffFF8427, color);
 
 
 class MyApp extends StatelessWidget {
+
+  final UserDetails detailsUser;
+      MyApp({Key key, @required  this.detailsUser}) : super(key: key);
+
+
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return StreamProvider<User>.value(
-      value: AuthService().user,
-      child: MaterialApp(
-        home: Home(),
+    return  MaterialApp(
+        home: Auth(),
+
         debugShowCheckedModeBanner: false,
         theme: new ThemeData(primarySwatch: colorCustom),
       
-      ),
-    ); 
+      );
   }
 }

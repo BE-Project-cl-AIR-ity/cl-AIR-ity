@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "953347964642-09ags80jc0r7biindgiosbj6rpst9loc.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.clairity.login_clairity",
+            "certificate_hash": "23904914ddef0e7504dcc40238d620e14f16ee60"
+          }
+        },
+        {
           "client_id": "953347964642-98mgpsjrnc0btho88iuhspvgcsqib0ki.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -30,6 +38,57 @@
             {
               "client_id": "953347964642-98mgpsjrnc0btho88iuhspvgcsqib0ki.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "953347964642-toebvt3ndmq9uj9soa1n5okmppl7q3rp.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.loginClairity"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:953347964642:android:7b1c138da71841243b28bb",
+        "android_client_info": {
+          "package_name": "com.example.login_clairity"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "953347964642-03i0v7025nmbir92bae3gr3te6rt7tt8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.login_clairity",
+            "certificate_hash": "23904914ddef0e7504dcc40238d620e14f16ee60"
+          }
+        },
+        {
+          "client_id": "953347964642-98mgpsjrnc0btho88iuhspvgcsqib0ki.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBwuLRWtx9ENKhE-XZYDN-iq-TxOxvXN0Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "953347964642-98mgpsjrnc0btho88iuhspvgcsqib0ki.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "953347964642-toebvt3ndmq9uj9soa1n5okmppl7q3rp.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.loginClairity"
+              }
             }
           ]
         }

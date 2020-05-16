@@ -1,23 +1,24 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:login_clairity/screens/authenticate/sign_in.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:login_clairity/screens/authenticate/auth.dart';
 import 'package:login_clairity/screens/graphs/thingsSpeakGraphs.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
-import 'package:login_clairity/screens/map/location.dart';
-import 'package:login_clairity/services/auth.dart';
 import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'dart:convert';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class Home extends StatefulWidget {
+
+    final UserDetails detailsUser;
+
+  Home({Key key, @required this.detailsUser}) : super(key: key);  
+
   @override
   _HomeState createState() => _HomeState();
 }
-
-
-
 
 String pm1 = '', pm2_5 = '', pm10 = '', name1 = '';
 double aqiDisplay = 0;
@@ -29,9 +30,7 @@ String userLocation = '';
 Map data;
 
 class _HomeState extends State<Home> {
-  final AuthService _auth = AuthService();
-
-
+  final GoogleSignIn _gSignIn =  GoogleSignIn();
 
   Map data;
   Future getData() async {
@@ -102,8 +101,6 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-
-    
     double width = MediaQuery.of(context).size.width;
     // Radial Meter
     var radialAxis = RadialAxis(
@@ -132,144 +129,156 @@ class _HomeState extends State<Home> {
         GaugeRange(startValue: 300, endValue: 500, color: Colors.redAccent[100])
       ],
     );
-    return Scaffold(
-      backgroundColor: Colors.deepOrangeAccent[50],
-      //AppBAr
-      appBar: AppBar(
-        title: Text('Air Pollution values'),
-        //backgroundColor: Color(0xffFF8427),
-        elevation: defaultTargetPlatform == TargetPlatform.android ? 5.0 : 0.0,
-        actions: <Widget>[
-          FlatButton.icon(
-            icon: Icon(Icons.person),
-            label: Text('Logout'),
-            onPressed: () async {
-              await _auth.signOut();
-            },
-          )
-        ],
-      ),
-
-      drawer: new Drawer(
-        child: new ListView(children: <Widget>[
-          new UserAccountsDrawerHeader(
-            accountName: new Text("Swaraj Bhagade"),
-            accountEmail: new Text("swarajbhagade@gmail.com"),
-            currentAccountPicture: new CircleAvatar(
-                backgroundColor: Colors.cyan, child: new Text("S")),
-          ),
-          new ListTile(
-            title: new Text("AQI"),
-            trailing: new Icon(Icons.view_carousel),
-          ),
-          new ListTile(
-            title: new Text("Graphs"),
-            trailing: new Icon(Icons.grain),
-            onTap: () {
-              Navigator.of(context).pop();
-              Navigator.of(context).push(new MaterialPageRoute(builder: (BuildContext context)=>new Graphs()));
-            },
-          ),
-          new ListTile(
-            title: new Text("Insights"),
-            trailing: new Icon(Icons.insert_emoticon),
-          ),
-          new ListTile(
-            title: new Text("FAQ"),
-            trailing: new Icon(Icons.flag),
-          ),
-          new Divider(),
-          new ListTile(
-            title: new Text("Signout"),
-            trailing: new Icon(Icons.account_circle),
-            onTap: () async {
-              await _auth.signOut();
-             
-              //Navigator.of(context).pop();
-              Navigator.of(context).push(new MaterialPageRoute(builder: (BuildContext context)=>new SignIn()));
-           
-
-            },
-          ),
-        ]),
-      ),
-
-      body: Container(
-        //color: Color(0xffFF8427),
-        padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 20.0),
-        child: Column(children: <Widget>[
-          SizedBox(height: 30),
-          Text(
-            userLocation,
-            style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
-          ),
-          //Text('AQI Value'),
-          SizedBox(height: 20),
-          //Radial Meter
-          SfRadialGauge(
-              title: GaugeTitle(
-                  text: 'AQI Value',
-                  textStyle:
-                      TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold)),
-              axes: <RadialAxis>[radialAxis]),
-          // PM values Display
-          Row(
-            children: <Widget>[
-              Text(
-                'PM 1 value : ' + pm1,
-                style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),
+    return WillPopScope(
+      onWillPop: () => Future.value(false),
+          child: Scaffold(
+        backgroundColor: Colors.deepOrangeAccent[50],
+        //AppBAr
+        appBar: AppBar(
+          title: Text('Air Pollution values'),
+          //backgroundColor: Color(0xffFF8427),
+          elevation: defaultTargetPlatform == TargetPlatform.android ? 5.0 : 0.0,
+          actions: <Widget>[
+            IconButton(
+              icon: Icon(
+                FontAwesomeIcons.signOutAlt,
+                size: 20.0,
+                color: Colors.white,
               ),
-              SizedBox(width: 10),
-              Text(
-                'PM 2.5 value : ' + pm2_5,
-                style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),
-              ),
-              SizedBox(width: 10),
-              Text(
-                'PM 10 value : ' + pm10,
-                style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),
-              ),
-            ],
-          ),
+              onPressed: (){
+                 _gSignIn.signOut();
+                print('Signed out');
+ Navigator.popUntil(context, ModalRoute.withName('/login'));            },
+            ),
+          ],
+        ),
 
-          SizedBox(height: 20.0),
-          Row(
-            children: <Widget>[
-              // location button
-              // SizedBox(width: 80.0),
-              // RaisedButton(
-              //     color: Colors.blue[400],
-              //     child: Text(
-              //       'Location',
-              //       style: TextStyle(color: Colors.white),
-              //     ),
-              //     onPressed: () {
-              //       Navigator.push(
-              //           context,
-              //           MaterialPageRoute(
-              //               builder: (BuildContext context) =>
-              //                   CurrentLocation()));
-              //     }),
+        drawer: new Drawer(
+          child: new ListView(children: <Widget>[
+            new UserAccountsDrawerHeader(
+              accountName: new Text(widget.detailsUser.userName),
+              accountEmail: new Text(widget.detailsUser.userEmail),
+              currentAccountPicture: new CircleAvatar(
+                  backgroundImage:NetworkImage(widget.detailsUser.photoUrl),
+                  radius: 10.0,
+                ),
+            ),
+            new ListTile(
+                title: new Text("AQI"),
+                trailing: new Icon(Icons.view_carousel),
+                onTap: () {
+                  Navigator.of(context).pop();
+                  Navigator.of(context).push(new MaterialPageRoute(
+                      builder: (BuildContext context) => new Home()));
+                }),
+            new ListTile(
+              title: new Text("Graphs"),
+              trailing: new Icon(Icons.grain),
+              onTap: () {
+                Navigator.of(context).pop();
+                Navigator.of(context).push(new MaterialPageRoute(
+                    builder: (BuildContext context) => new Graphs()));
+              },
+            ),
+            new ListTile(
+              title: new Text("Insights"),
+              trailing: new Icon(Icons.insert_emoticon),
+            ),
+            new ListTile(
+              title: new Text("FAQ"),
+              trailing: new Icon(Icons.flag),
+            ),
+            new Divider(),
+            new ListTile(
+              title: new Text("Signout"),
+              trailing: new Icon(Icons.account_circle),
+              onTap: () async {
+                //await _auth.signOut();
 
-              // graphs button
-              // SizedBox(width: 30.0),
-              // RaisedButton(
-              //     color: Colors.blue[400],
-              //     child: Text(
-              //       'Graphs',
-              //       style: TextStyle(color: Colors.white),
-              //     ), 
-              //     onPressed: () {
-              //       Navigator.push(
-              //           context,
-              //           MaterialPageRoute(
-              //               builder: (BuildContext context) => Graphs()));
-              //     }),
-            ],
-          ),
-        ]),
+                //Navigator.of(context).pop();
+                //Navigator.of(context).push(new MaterialPageRoute(
+                    //builder: (BuildContext context) => new SignIn()));
+              },
+            ),
+          ]),
+        ),
+
+        body: Container(
+          //color: Color(0xffFF8427),
+          padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 20.0),
+          child: Column(children: <Widget>[
+            SizedBox(height: 30),
+            Text(
+              userLocation,
+              style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
+            ),
+            //Text('AQI Value'),
+            SizedBox(height: 20),
+            //Radial Meter
+            SfRadialGauge(
+                title: GaugeTitle(
+                    text: 'AQI Value',
+                    textStyle:
+                        TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold)),
+                axes: <RadialAxis>[radialAxis]),
+            // PM values Display
+            Row(
+              children: <Widget>[
+                Text(
+                  'PM 1 value : ' + pm1,
+                  style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),
+                ),
+                SizedBox(width: 10),
+                Text(
+                  'PM 2.5 value : ' + pm2_5,
+                  style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),
+                ),
+                SizedBox(width: 10),
+                Text(
+                  'PM 10 value : ' + pm10,
+                  style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),
+                ),
+              ],
+            ),
+
+            SizedBox(height: 20.0),
+            Row(
+              children: <Widget>[
+                // location button
+                // SizedBox(width: 80.0),
+                // RaisedButton(
+                //     color: Colors.blue[400],
+                //     child: Text(
+                //       'Location',
+                //       style: TextStyle(color: Colors.white),
+                //     ),
+                //     onPressed: () {
+                //       Navigator.push(
+                //           context,
+                //           MaterialPageRoute(
+                //               builder: (BuildContext context) =>
+                //                   CurrentLocation()));
+                //     }),
+
+                // graphs button
+                // SizedBox(width: 30.0),
+                // RaisedButton(
+                //     color: Colors.blue[400],
+                //     child: Text(
+                //       'Graphs',
+                //       style: TextStyle(color: Colors.white),
+                //     ),
+                //     onPressed: () {
+                //       Navigator.push(
+                //           context,
+                //           MaterialPageRoute(
+                //               builder: (BuildContext context) => Graphs()));
+                //     }),
+              ],
+            ),
+          ]),
+        ),
       ),
     );
   }
 }
-

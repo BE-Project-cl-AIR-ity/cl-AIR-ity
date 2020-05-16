@@ -1,33 +1,37 @@
 import 'package:flutter/material.dart';
-import 'package:login_clairity/models/user.dart';
-import 'package:login_clairity/screens/animations/splash.dart';
-import 'package:login_clairity/screens/authenticate/authenticate.dart';
+import 'package:login_clairity/screens/authenticate/auth.dart';
 import 'package:login_clairity/screens/home/home.dart';
-import 'package:provider/provider.dart';
 import 'package:splashscreen/splashscreen.dart';
 
+String user='';
 
 class Wrapper extends StatefulWidget {
+  final UserDetails detailsUser;
+
+  Wrapper({Key key, @required this.detailsUser}) : super(key: key);  
+
   @override
   _WrapperState createState() => _WrapperState();
 }
 
+class _WrapperState extends State<Wrapper> {
 result(user) {
   if (user == null) {
-    return Authenticate();
+    return Auth();
   } else {
-    return Home();
+    return Home(detailsUser: widget.detailsUser);
   }
 }
 
-class _WrapperState extends State<Wrapper> {
   @override
   Widget build(BuildContext context) {
-    final user = Provider.of<User>(context);
-    final double width = MediaQuery.of(context).size.width;
     //return either home or authenticate widget
 
+  user = widget.detailsUser.userEmail;
+  print(user);
+
     return SplashScreen(
+    
       seconds: 2,
       navigateAfterSeconds: result(user),
       image: new Image.asset('assets/final_logo.png'),
@@ -38,3 +42,7 @@ class _WrapperState extends State<Wrapper> {
     );
   }
 }
+
+
+
+
