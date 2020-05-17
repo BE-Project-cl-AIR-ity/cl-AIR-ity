@@ -5,6 +5,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:login_clairity/screens/authenticate/auth.dart';
 import 'package:login_clairity/screens/graphs/thingsSpeakGraphs.dart';
+import 'package:login_clairity/screens/sensorValues.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
 import 'package:http/http.dart' as http;
 import 'dart:async';
@@ -19,7 +20,7 @@ class Home extends StatefulWidget {
   _HomeState createState() => _HomeState();
 }
 
-String pm1 = '', pm2_5 = '', pm10 = '', name1 = '';
+String pm1 = '', pm2_5 = '', pm10 = '', co = '', temp='', humidity = '', pressure = '';
 double aqiDisplay = 0;
 String _latitude = '';
 String _longitude = '';
@@ -42,6 +43,15 @@ class _HomeState extends State<Home> {
       pm2_5 = data["field2"];
 
       pm10 = data["field3"];
+
+      co = data["field4"];
+
+      temp=data["field5"];
+
+      humidity = data["field6"];
+
+      pressure = data["field7"];
+
     });
 
     //aqiDisplay = double.parse(pm2_5);
@@ -183,6 +193,15 @@ class _HomeState extends State<Home> {
               },
             ),
             new ListTile(
+              title: new Text("Sensor Values"),
+              trailing: new Icon(FontAwesomeIcons.bolt),
+              onTap: () {
+                Navigator.of(context).pop();
+                Navigator.of(context).push(new MaterialPageRoute(
+                    builder: (BuildContext context) => new SensorValues(pm1: pm1, pm2_5: pm2_5, pm10: pm10, co: co, temp: temp, humidity: humidity, pressure: pressure)));
+              },
+            ),
+            new ListTile(
               title: new Text("Insights"),
               trailing: new Icon(FontAwesomeIcons.dizzy),
             ),
@@ -223,60 +242,7 @@ class _HomeState extends State<Home> {
                         TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold)),
                 axes: <RadialAxis>[radialAxis]),
             // PM values Display
-            Row(
-              children: <Widget>[
-                Text(
-                  'PM 1 value : ' + pm1,
-                  style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),
-                ),
-                SizedBox(width: 10),
-                Text(
-                  'PM 2.5 value : ' + pm2_5,
-                  style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),
-                ),
-                SizedBox(width: 10),
-                Text(
-                  'PM 10 value : ' + pm10,
-                  style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),
-                ),
-              ],
-            ),
-
-            SizedBox(height: 20.0),
-            Row(
-              children: <Widget>[
-                // location button
-                // SizedBox(width: 80.0),
-                // RaisedButton(
-                //     color: Colors.blue[400],
-                //     child: Text(
-                //       'Location',
-                //       style: TextStyle(color: Colors.white),
-                //     ),
-                //     onPressed: () {
-                //       Navigator.push(
-                //           context,
-                //           MaterialPageRoute(
-                //               builder: (BuildContext context) =>
-                //                   CurrentLocation()));
-                //     }),
-
-                // graphs button
-                // SizedBox(width: 30.0),
-                // RaisedButton(
-                //     color: Colors.blue[400],
-                //     child: Text(
-                //       'Graphs',
-                //       style: TextStyle(color: Colors.white),
-                //     ),
-                //     onPressed: () {
-                //       Navigator.push(
-                //           context,
-                //           MaterialPageRoute(
-                //               builder: (BuildContext context) => Graphs()));
-                //     }),
-              ],
-            ),
+                       
           ]),
         ),
       ),

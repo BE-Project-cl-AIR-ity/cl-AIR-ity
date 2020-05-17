@@ -22,54 +22,7 @@ class _GraphsState extends State<Graphs> {
       appBar: AppBar(
         title: Text("Graphs")
       ),
-      drawer: new Drawer(
-        child: new ListView(children: <Widget>[
-          new UserAccountsDrawerHeader(
-            accountName: new Text("Swaraj Bhagade"),
-            accountEmail: new Text("swarajbhagade@gmail.com"),
-            currentAccountPicture: new CircleAvatar(
-                backgroundColor: Colors.cyan, child: new Text("S")),
-          ),
-          new ListTile(
-              title: new Text("AQI"),
-              trailing: new Icon(Icons.view_carousel),
-              onTap: () {
-                Navigator.of(context).pop();
-                Navigator.of(context).push(new MaterialPageRoute(
-                    builder: (BuildContext context) => new Home()));
-              }),
-          new ListTile(
-            title: new Text("Graphs"),
-            trailing: new Icon(Icons.grain),
-            onTap: () {
-              Navigator.of(context).pop();
-              Navigator.of(context).push(new MaterialPageRoute(
-                  builder: (BuildContext context) => new Graphs()));
-            },
-          ),
-          new ListTile(
-            title: new Text("Insights"),
-            trailing: new Icon(Icons.insert_emoticon),
-          ),
-          new ListTile(
-            title: new Text("FAQ"),
-            trailing: new Icon(Icons.flag),
-          ),
-          new Divider(),
-          new ListTile(
-            title: new Text("Signout"),
-            trailing: new Icon(Icons.account_circle),
-            onTap: () async {
-              //await _auth.signOut();
-
-              //Navigator.of(context).pop();
-              // Navigator.of(context).push(new MaterialPageRoute(
-              //     builder: (BuildContext context) => new SignIn()));
-            },
-          ),
-        ]),
-      ),
-
+      
       body: Container(
         child: Column(
           children: <Widget>[
