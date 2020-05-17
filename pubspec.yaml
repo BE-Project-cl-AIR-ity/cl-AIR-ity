@@ -38,6 +38,7 @@ dependencies:
   http:
 
 
+
   firebase_core: 0.4.2
   google_sign_in: ^4.0.1+3
   font_awesome_flutter: ^8.2.0
@@ -45,8 +46,13 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  # flutter_launcher_icons: 0.7.5
 
 
+
+flutter_icons:
+#   image_path: "assets/final_con.png"
+# android: true
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 

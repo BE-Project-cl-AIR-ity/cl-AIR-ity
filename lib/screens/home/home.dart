@@ -23,6 +23,7 @@ class Home extends StatefulWidget {
 }
 
 String pm1 = '', pm2_5 = '', pm10 = '', co = '', temp='', humidity = '', pressure = '';
+String predict='';
 double aqiDisplay = 0;
 String _latitude = '';
 String _longitude = '';
@@ -42,6 +43,8 @@ class _HomeState extends State<Home> {
         "https://api.thingspeak.com/channels/987334/feeds/last.json?api_key=88BMJAAFH25HIF9X&results=100");
     data = json.decode(response.body);
     setState(() {
+      //predict = data["predictionPM25"];
+
       pm1 = data["field1"];
 
       pm2_5 = data["field2"];
@@ -58,7 +61,7 @@ class _HomeState extends State<Home> {
 
     });
 
-    //aqiDisplay = double.parse(pm2_5);
+    aqiDisplay = double.parse(pm2_5);
 
     double aqi = double.parse(pm2_5);
     print(aqi);
@@ -78,8 +81,8 @@ class _HomeState extends State<Home> {
       aqiDisplay = (aqi - 350.5) * (70) / (150) + 400;
     }
     aqiDisplay = aqiDisplay.roundToDouble();
-    //aqiDisplay = 200;
-    print(aqiDisplay);
+    aqiDisplay = 200;
+    print(predict);
 
     
   }
