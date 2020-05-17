@@ -36,9 +36,14 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return  MaterialApp(
         home: Auth(),
-
         debugShowCheckedModeBanner: false,
         theme: new ThemeData(primarySwatch: colorCustom),
+        routes: {
+    // When navigating to the "/" route, build the FirstScreen widget.
+    '/login': (context) => Auth(),
+    // When navigating to the "/second" route, build the SecondScreen widget.
+    //'/second': (context) => SecondScreen(),
+  },
       
       );
   }

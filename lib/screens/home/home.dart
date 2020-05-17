@@ -11,10 +11,9 @@ import 'dart:async';
 import 'dart:convert';
 
 class Home extends StatefulWidget {
+  final UserDetails detailsUser;
 
-    final UserDetails detailsUser;
-
-  Home({Key key, @required this.detailsUser}) : super(key: key);  
+  Home({Key key, @required this.detailsUser}) : super(key: key);
 
   @override
   _HomeState createState() => _HomeState();
@@ -30,7 +29,7 @@ String userLocation = '';
 Map data;
 
 class _HomeState extends State<Home> {
-  final GoogleSignIn _gSignIn =  GoogleSignIn();
+  final GoogleSignIn _gSignIn = GoogleSignIn();
 
   Map data;
   Future getData() async {
@@ -131,13 +130,14 @@ class _HomeState extends State<Home> {
     );
     return WillPopScope(
       onWillPop: () => Future.value(false),
-          child: Scaffold(
+      child: Scaffold(
         backgroundColor: Colors.deepOrangeAccent[50],
         //AppBAr
         appBar: AppBar(
           title: Text('Air Pollution values'),
           //backgroundColor: Color(0xffFF8427),
-          elevation: defaultTargetPlatform == TargetPlatform.android ? 5.0 : 0.0,
+          elevation:
+              defaultTargetPlatform == TargetPlatform.android ? 5.0 : 0.0,
           actions: <Widget>[
             IconButton(
               icon: Icon(
@@ -145,10 +145,12 @@ class _HomeState extends State<Home> {
                 size: 20.0,
                 color: Colors.white,
               ),
-              onPressed: (){
-                 _gSignIn.signOut();
+              onPressed: () {
+                _gSignIn.signOut();
                 print('Signed out');
- Navigator.popUntil(context, ModalRoute.withName('/login'));            },
+                  Navigator.of(context).push(new MaterialPageRoute(
+                      builder: (BuildContext context) => new Auth()));
+              },
             ),
           ],
         ),
@@ -159,13 +161,13 @@ class _HomeState extends State<Home> {
               accountName: new Text(widget.detailsUser.userName),
               accountEmail: new Text(widget.detailsUser.userEmail),
               currentAccountPicture: new CircleAvatar(
-                  backgroundImage:NetworkImage(widget.detailsUser.photoUrl),
-                  radius: 10.0,
-                ),
+                backgroundImage: NetworkImage(widget.detailsUser.photoUrl),
+                radius: 10.0,
+              ),
             ),
             new ListTile(
                 title: new Text("AQI"),
-                trailing: new Icon(Icons.view_carousel),
+                trailing: new Icon(FontAwesomeIcons.smog),
                 onTap: () {
                   Navigator.of(context).pop();
                   Navigator.of(context).push(new MaterialPageRoute(
@@ -173,7 +175,7 @@ class _HomeState extends State<Home> {
                 }),
             new ListTile(
               title: new Text("Graphs"),
-              trailing: new Icon(Icons.grain),
+              trailing: new Icon(FontAwesomeIcons.chartLine),
               onTap: () {
                 Navigator.of(context).pop();
                 Navigator.of(context).push(new MaterialPageRoute(
@@ -182,22 +184,21 @@ class _HomeState extends State<Home> {
             ),
             new ListTile(
               title: new Text("Insights"),
-              trailing: new Icon(Icons.insert_emoticon),
+              trailing: new Icon(FontAwesomeIcons.dizzy),
             ),
             new ListTile(
               title: new Text("FAQ"),
-              trailing: new Icon(Icons.flag),
+              trailing: new Icon(FontAwesomeIcons.question),
             ),
             new Divider(),
             new ListTile(
               title: new Text("Signout"),
-              trailing: new Icon(Icons.account_circle),
+              trailing: new Icon(FontAwesomeIcons.signOutAlt),
               onTap: () async {
-                //await _auth.signOut();
-
-                //Navigator.of(context).pop();
-                //Navigator.of(context).push(new MaterialPageRoute(
-                    //builder: (BuildContext context) => new SignIn()));
+                _gSignIn.signOut();
+                print('Signed out');
+                Navigator.of(context).push(new MaterialPageRoute(
+                      builder: (BuildContext context) => new Auth()));
               },
             ),
           ]),

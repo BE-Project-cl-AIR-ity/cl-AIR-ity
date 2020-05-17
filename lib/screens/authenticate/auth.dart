@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:login_clairity/screens/authenticate/wrapper.dart';
 import 'package:login_clairity/screens/home/home.dart';
 
 class Auth extends StatefulWidget {
@@ -14,9 +16,7 @@ class _AuthState extends State<Auth> {
   final GoogleSignIn _googlSignIn = new GoogleSignIn();
 
   Future<FirebaseUser> _signIn(BuildContext context) async {
-    Scaffold.of(context).showSnackBar(new SnackBar(
-      content: new Text('Sign in'),
-    ));
+    
 
     final GoogleSignInAccount googleUser = await _googlSignIn.signIn();
     final GoogleSignInAuthentication googleAuth =
@@ -45,7 +45,7 @@ class _AuthState extends State<Auth> {
     Navigator.push(
       context,
       new MaterialPageRoute(
-        builder: (context) => new Home(detailsUser: details),
+        builder: (context) => new Wrapper(detailsUser: details),
       ),
     );
     return userDetails;
@@ -53,55 +53,86 @@ class _AuthState extends State<Auth> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Builder(
-        builder: (context) => Stack(
-          fit: StackFit.expand,
-          children: <Widget>[
-            Container(
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height,
-              child: Image.network(
-                  'https://images.unsplash.com/photo-1518050947974-4be8c7469f0c?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60',
-                  fit: BoxFit.fill,
-                  color: Color.fromRGBO(255, 255, 255, 0.6),
-                  colorBlendMode: BlendMode.modulate),
-            ),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                SizedBox(height: 10.0),
-                Container(
-                    width: 250.0,
-                    child: Align(
-                      alignment: Alignment.center,
-                      child: RaisedButton(
-                        shape: RoundedRectangleBorder(
-                            borderRadius: new BorderRadius.circular(30.0)),
-                        color: Color(0xffffffff),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: <Widget>[
-                            Icon(
-                              FontAwesomeIcons.google,
-                              color: Color(0xffCE107C),
-                            ),
-                            SizedBox(width: 10.0),
-                            Text(
-                              'Sign in with Google',
-                              style: TextStyle(
-                                  color: Colors.black, fontSize: 18.0),
-                            ),
-                          ],
-                        ),
-                        onPressed: () => _signIn(context)
-                            .then((FirebaseUser user) => print(user))
-                            .catchError((e) => print(e)),
-                      ),
-                    )),
-              ],
-            ),
+    return WillPopScope(
+    onWillPop: () {
+      return showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text("Confirm Exit"),
+            content: Text("Are you sure you want to exit?"),
+            actions: <Widget>[
+              FlatButton(
+                child: Text("YES"),
+                onPressed: () {
+                  SystemNavigator.pop();
+                },
+              ),
+              FlatButton(
+                child: Text("NO"),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+            )
           ],
+        );
+      },
+      );
+    },
+          //return Future.value(true),
+
+    child: Scaffold(
+        backgroundColor: Colors.white,
+        body: Builder(
+          builder: (context) => Stack(
+            fit: StackFit.expand,
+            children: <Widget>[
+              Container(
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height,
+              ),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  SizedBox(height: 10.0),
+                  Image(
+                      image: AssetImage('assets/final_logo.png'),
+                      height: 250,
+                      width: 250),
+                  SizedBox(height: 10.0),
+                  Container(
+                      width: 250.0,
+                      child: Align(
+                        alignment: Alignment.center,
+                        child: RaisedButton(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: new BorderRadius.circular(30.0)),
+                          color: Color(0xffffffff),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: <Widget>[
+                              Icon(
+                                FontAwesomeIcons.google,
+                                color: Color(0xffCE107C),
+                              ),
+                              SizedBox(width: 10.0),
+                              Text(
+                                'Sign in with Google',
+                                style: TextStyle(
+                                    color: Colors.black, fontSize: 18.0),
+                              ),
+                            ],
+                          ),
+                          onPressed: () => _signIn(context)
+                              .then((FirebaseUser user) => print(user))
+                              .catchError((e) => print(e)),
+                        ),
+                      )),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );
