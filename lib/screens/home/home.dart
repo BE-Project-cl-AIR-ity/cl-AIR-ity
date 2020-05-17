@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -145,7 +146,32 @@ class _HomeState extends State<Home> {
       ],
     );
     return WillPopScope(
-      onWillPop: () => Future.value(false),
+    onWillPop: () {
+      return showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text("Confirm Exit"),
+            content: Text("Are you sure you want to exit?"),
+            actions: <Widget>[
+              FlatButton(
+                child: Text("YES"),
+                onPressed: () {
+                  SystemNavigator.pop();
+                },
+              ),
+              FlatButton(
+                child: Text("NO"),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+            )
+          ],
+        );
+      },
+      );
+    },
       child: Scaffold(
         backgroundColor: Colors.deepOrangeAccent[50],
         //AppBAr
