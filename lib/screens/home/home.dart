@@ -5,6 +5,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:login_clairity/screens/authenticate/auth.dart';
 import 'package:login_clairity/screens/graphs/thingsSpeakGraphs.dart';
+import 'package:login_clairity/screens/insights.dart';
 import 'package:login_clairity/screens/sensorValues.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
 import 'package:http/http.dart' as http;
@@ -28,6 +29,8 @@ String reverseLocation = '';
 String updatedLink = '';
 String userLocation = '';
 Map data;
+String advice ;
+  String risk ;
 
 class _HomeState extends State<Home> {
   final GoogleSignIn _gSignIn = GoogleSignIn();
@@ -74,7 +77,10 @@ class _HomeState extends State<Home> {
       aqiDisplay = (aqi - 350.5) * (70) / (150) + 400;
     }
     aqiDisplay = aqiDisplay.roundToDouble();
+    //aqiDisplay = 200;
     print(aqiDisplay);
+
+    
   }
 
   void _getCurrentLocation() async {
@@ -204,6 +210,11 @@ class _HomeState extends State<Home> {
             new ListTile(
               title: new Text("Insights"),
               trailing: new Icon(FontAwesomeIcons.dizzy),
+              onTap: () {
+                Navigator.of(context).pop();
+                Navigator.of(context).push(new MaterialPageRoute(
+                    builder: (BuildContext context) => new Insights(aqiDisplay: aqiDisplay)));
+              },
             ),
             new ListTile(
               title: new Text("FAQ"),

@@ -40,7 +40,7 @@ class MyApp extends StatelessWidget {
         theme: new ThemeData(primarySwatch: colorCustom),
         routes: {
     // When navigating to the "/" route, build the FirstScreen widget.
-    '/login': (context) => Auth(),
+    //'/login': (context) => Auth(),
     // When navigating to the "/second" route, build the SecondScreen widget.
     //'/second': (context) => SecondScreen(),
   },

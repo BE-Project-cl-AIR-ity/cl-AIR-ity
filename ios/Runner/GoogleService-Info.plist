@@ -6,8 +6,6 @@
 	<string>953347964642-toebvt3ndmq9uj9soa1n5okmppl7q3rp.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
 	<string>com.googleusercontent.apps.953347964642-toebvt3ndmq9uj9soa1n5okmppl7q3rp</string>
-	<key>ANDROID_CLIENT_ID</key>
-	<string>953347964642-09ags80jc0r7biindgiosbj6rpst9loc.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
 	<string>AIzaSyCLG4c79YDTZOOgcEMlXQowG3rP16VarMI</string>
 	<key>GCM_SENDER_ID</key>
@@ -31,7 +29,7 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:953347964642:ios:e40634ce5e7a1a5b3b28bb</string>
+	<string>1:953347964642:ios:a5eea4442d6ae0763b28bb</string>
 	<key>DATABASE_URL</key>
 	<string>https://cl-air-ity-89f3e.firebaseio.com</string>
 </dict>
